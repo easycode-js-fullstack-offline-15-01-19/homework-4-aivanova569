@@ -1,20 +1,26 @@
 // -------------------------- Home work --------------------------
 // ----------------------- Ivanova Anastasiia --------------------
-// ------------------------------ 1 ------------------------------
+// ---------------------------- !1! ------------------------------
 /**
  * Пинимает любое количество чисел и возвращать их произведение
  *
- * @param {number} 
+ * @return {number}
  * @return {number} произведение чисел
  */
 function multiply() {
-  let a = 1;
-  for (let i = 0; i < arguments.length; i++) a *= arguments[i];
-  if (arguments.length === 0) return 0;
-  return a
+	if (!arguments.length === 0) {return 0;}
+
+	let a = 1;
+	
+  for (let i = 0; i < arguments.length; i++) {
+		if (typeof arguments[i] === 'number') {
+			a *= arguments[i];
+		}
+	}
+  return a;
 }
 
-// ------------------------------ 2 ------------------------------
+// ----------------------------- !2! -----------------------------
 /**
  * Принимает строку и возвращает строку-перевертыш
  *
@@ -22,11 +28,7 @@ function multiply() {
  * @return {String} string в перевернутом виде
  */
 function reverseString(string) {
-	let newString = '';
-    for (let i = string.length - 1; i >= 0; i--) {
-		newString += string[i];
-	}
-    return newString;
+		return string.split('').reverse().join('');
 }
 
 // ------------------------------ 3 ------------------------------
@@ -66,7 +68,7 @@ function checkGuess(userGuess) {
   	}
 }
 
-// ------------------------------ 5 ------------------------------
+// ---------------------------- 5 --------------------------------
 /**
  * Принимает число n и возвращает массив, заполненный числами от 1 до n
  *
@@ -81,7 +83,7 @@ function getArray(n) {
   return arr;
 }
 
-// ------------------------------ 6 ------------------------------
+// ---------------------------- !6! ------------------------------
 /**
  * Возвращает новый массив с дублированными элементами входного массива
  *
@@ -89,24 +91,23 @@ function getArray(n) {
  * @return {Arr} Массив с дублированными элементами входного массива.
  */
 function doubleArray(arr) {
-   arr = arr.concat(arr);
-   return console.log(arr)
+	return arr.concat(arr);
 }
-doubleArray([1, 2, 3])
 
-// ------------------------------ 7 ------------------------------
+// ------------------------------ !7! ----------------------------
 /**
  * Удаляет из каждого массива первый элемент
  *
  * @param {arr} arr Входной массив.
- * @return {arr} Массив из оставшихся значений.
+ * @return {arr} newArr Массив из оставшихся значений.
  */
-function changeCollection(arr) {
-  for (let i = 0; i < arguments.length; i++) {
-    arr[i] = arguments[i];
-    arr[i].shift();
-  }
-  return arr;
+function changeCollection() {
+	let newArr = [];
+
+	for (let i = 0; i < arguments.length; i++) {
+		newArr.push(arguments[i].slice(1));
+	}
+	return newArr;
 }
 
 // ------------------------------ 8 ------------------------------
@@ -145,7 +146,7 @@ function funcGetUsers(arr, key, value) {
   return newArr;
 }
 
-// ------------------------------ 9 ------------------------------
+// ------------------------------ !9! -----------------------------
 /**
 * Создает строки с результатами обработки данных коллбеком
 *
@@ -153,52 +154,31 @@ function funcGetUsers(arr, key, value) {
 * @param {callback} Коллбек для обработки массива.
 * @returns {String} Сообщение с результатами обработки.
 */
-let arr1 = ['my', 'name', 'is', 'Trinity'];
-let arr2 = [10, 20, 30];
-let arr3 = [
-	{
-		age: 45,
-		name: 'Jhon'
-	},
-	{
-		age: 20,
-		name: 'Aaron'
+ function newValue(arr, callback) {
+	 if (!Array.isArray(arr)) return console.log('error');
+	 
+	 let res = "New value: ";
+
+	 for (let i = 0; i < arr.length; i++) {
+		res += callback(arr[i]);
+	 }
+	 return res;
 	}
-];
-let arr4 = ['abc', '123'];
 
-function newValue(arr, callback) {
-  return 'New value: ' + callback(arr);
-}
+let newRes1 = newValue(['my', 'name', 'is', 'Trinity'], function (item) {
+	return item[0].toUpperCase() + item.slice(1);
+});
 
-function callback1(arr1) {
-	let arr = [];
-	for (let i = 0; i < arr1.length; i++) {
-		arr += arr1[i][0].toUpperCase() + arr1[i].slice(1) + '';
-	    }
-	return arr;
-}
+let newRes2 = newValue([10, 20, 30], function (item) {
+	return item * 10 + ', ';
 
-function callback2(arr2) {
-	let arr = [];
-	for (let i = 0; i < arr2.length; i++) {
- 		arr.push(arr2[i] * 10);
-	}
-	return arr.join(' ');
-}
+});
 
-function callback3(arr3) {
-	let arr = [];
-	for (let i of arr3) {
-		arr.push(`${i.name} is ${i.age}`);
-	}
-	return arr.join(', ');
-}
+let newRes3 = newValue([{age: 45, name: 'Jhon'}, {age: 20, name: 'Aaron'}], function (item) {
+	return (`${item.name} is ${item.age}, `);
+});
 
-function callback4(arr4) {
-	let arr = [];
-    for (let i = 0; i < arr4.length; i++) {
-		arr.push(arr4[i].split('').reverse().join(''));
-	}
-	return arr.join(', ');
-}
+let newRes4 = newValue(['abc', '123'], function (item) {
+	// return arr[i].split('').reverse().join('');
+	return item.split('').reverse().join('') + ', ';
+});
